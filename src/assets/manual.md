@@ -103,8 +103,8 @@ file, questions are saved for each student as either `1` (correct) or `0`
 
 ### PDF Handouts
 
-After createing the csv output files, the program automatically generates pdf result
-sheets that can be given to the test takers. These handouts report overall score and
+After creating the csv output files, the program automatically generates pdf result
+sheets that can be distributed to the test takers. These handouts report overall score and
 list out every incorrect response with a corresponding correction.
 
 A pdf file listing the correct response for every question in each of the Answer
