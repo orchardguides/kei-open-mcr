@@ -40,9 +40,6 @@ field. Also, add a **Test Form Code** which will be used to match students' exam
 with the correct answer key, and finally fill in the exam with the correct
 answers.
 
-This is optional - you can choose to just have the software read the exams and
-not score them.
-
 ### Reading Sheets
 
 Simply follow the following steps to process any number of filled exam sheets:
