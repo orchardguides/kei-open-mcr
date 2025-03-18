@@ -1,7 +1,7 @@
 <!-- NOTE: This file is used to generate the manual.pdf, which must be
 done as part of the build process (see /build_instructions.md) -->
 
-![OpenMCR](wordmark.png)
+# Kei OpenMCT
 
 # User Manual
 
@@ -10,15 +10,15 @@ done as part of the build process (see /build_instructions.md) -->
 ### Installation
 
 For download and installation instructions, see the project homepage:
-https://github.com/iansan5653/open-mcr
+https://github.com/orchardguides/kei-open-mcr
 
 ### Printing Sheets
 
 In order to use the OpenMCR software, students must use the provided multiple-
 choice sheets. Two options are available (click the names to print PDFs):
 
-- `multiple_choice_sheet_75q` (https://github.com/iansan5653/open-mcr/raw/master/src/assets/multiple_choice_sheet_75q.pdf): Has 75 questions as well as space for students' full names, course ID, student ID, and test form code.
-- `multiple_choice_sheet_150q` (https://github.com/iansan5653/open-mcr/raw/master/src/assets/multiple_choice_sheet_150q.pdf):
+- `multiple_choice_sheet_75q` (https://github.com/orchardguides/kei-open-mcr/blob/main/src/assets/multiple_choice_sheet_75q.pdf]: Has 75 questions as well as space for students' full names, course ID, student ID, and test form code.
+- `multiple_choice_sheet_150q` (https://github.com/orchardguides/kei-open-mcr/blob/main/src/assets/multiple_choice_sheet_75q.pdf):
   Doubles the number of questions to 150, but removes the bubbles for student name. Instead, a non-processed write-in name field is provided.
 
 The program is robust and should work with most printers and scanners, however
