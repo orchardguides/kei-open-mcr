@@ -1,7 +1,7 @@
 <!-- NOTE: This file is used to generate the manual.pdf, which must be
 done as part of the build process (see /build_instructions.md) -->
 
-# Kei OpenMCT
+# Kei OpenMCR
 
 # User Manual
 
