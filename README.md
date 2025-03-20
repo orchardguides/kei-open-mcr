@@ -27,7 +27,7 @@ Currently, packaged executables are only provided for Windows. For other operati
 
 ### Running Without Install
 
-ZIP file packages are also available for each release. Download the file, extract it anywhere on your machine, and run the `main.exe` file. This method does not require administrator priveleges.
+ZIP file packages are also available for each release. Download the file, extract it anywhere on your machine, and run the `kei-open-mcr.exe` file found in the dist_windows folder. This method shoud not require administrator priveleges.
 
 ### Running From Source / CLI
 
@@ -41,7 +41,9 @@ If you wish to customize the software, use the command line interface, or run it
 
 > **Note**: On MacOS, if you see a black screen when running the GUI, you need to uninstall Python, install TKinter, and then reinstall Python.
 
-> **Note**: On Linux machines, you may see an error message that `opencv` or `tkinter` are not found. If you see this, install those dependencies by running `sudo apt-get install python3-opencv python3-tk` and then try again.
+> **Note**: On Linux machines, you may see an error message that `opencv` or `tkinter are not found. If you see this, install those dependencies by running `sudo apt-get install python3-opencv python3-tk` and then try again.
+
+> On Linux machines it is fairly easy to create an exacutable file using the instructions described in the buld_instructions.md file.
 
 ## Printable Multiple Choice Sheet
 
