@@ -25,13 +25,9 @@ This software and the corresponding multiple choice sheet were originally develo
 
 Currently, packaged executables are only provided for Windows. For other operating systems, see Running From Source below.
 
-### Windows Installation
-
-To install the utility, simply download the latest `.exe` file from from the releases page and install it. After installation, check your Start menu for a shortcut.
-
 ### Running Without Install
 
-For users who cannot or do not want to install the software on their machine, ZIP file packages are also available for each release. Download the file, extract it anywhere on your machine, and run the `main.exe` file. This method does not require administrator priveleges.
+ZIP file packages are also available for each release. Download the file, extract it anywhere on your machine, and run the `main.exe` file. This method does not require administrator priveleges.
 
 ### Running From Source / CLI
 
