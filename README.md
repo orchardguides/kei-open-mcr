@@ -27,11 +27,13 @@ Currently, packaged executables are only provided for Windows. For other operati
 
 ### Running Without Install
 
-ZIP file packages are also available for each release. Download the file, extract it anywhere on your machine, and run the `kei-open-mcr.exe` file found in the dist_windows folder. This method shoud not require administrator priveleges.
+ZIP file packages are available for each release.
+
+To launch the program in Windows, download the ZIP file and extract its contents to a folder anywhere on your machine. Then run the `kei-open-mcr.exe` file found in the dist_windows folder. This method shoud not require administrator priveleges.
 
 ### Running From Source / CLI
 
-If you wish to customize the software, use the command line interface, or run it on a non-Windows device, you can run the Python program directly from the source files. This requires Python and Pip to be installed on your machine.
+If you wish to customize the software or launch the program in a non-Windows environment, you can use the command line interface and run the Python program directly from the source files. This requires Python and Pip to be installed on your machine.
 
 1. Clone the reposotory using Git, or download and extract the latest `Source code (zip)` file from releases.
 2. Open a terminal / command prompt in the extracted directory.
@@ -43,21 +45,14 @@ If you wish to customize the software, use the command line interface, or run it
 
 > **Note**: On Linux machines, you may see an error message that `opencv` or `tkinter are not found. If you see this, install those dependencies by running `sudo apt-get install python3-opencv python3-tk` and then try again.
 
-> On Linux machines it is fairly easy to create an exacutable file using the instructions described in the buld_instructions.md file.
+> On Linux machines it is fairly easy to create a single exacutable file using the instructions described in the buld_instructions.md file.
 
 ## Printable Multiple Choice Sheet
 
-The multiple choice sheet that must be used with this software is available
-for printing here:
+The multiple choice sheet that must be used with this software is available for printing here:
 
 * [75 Question Variant](https://github.com/orchardguides/kei-open-mcr/blob/main/src/assets/multiple_choice_sheet_75q.pdf)
 * [150 Question Variant](https://github.com/orchardguides/kei-open-mcr/blob/main/src/assets/multiple_choice_sheet_150q.pdf)
-
-## Usage Instructions
-
-Run the program by finding it in your Start menu after installing.
-
-For full operating instructions, see the [Manual](src/assets/manual.md).
 
 ## License
 
@@ -65,15 +60,9 @@ For full operating instructions, see the [Manual](src/assets/manual.md).
 
 Copyright (C) 2019 Ian Sanders
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
 For the full license text, see [license.txt](./license.txt).
 
