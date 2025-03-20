@@ -45,7 +45,7 @@ If you wish to customize the software or launch the program in a non-Windows env
 
 > **Note**: On Linux machines, you may see an error message that `opencv` or `tkinter are not found. If you see this, install those dependencies by running `sudo apt-get install python3-opencv python3-tk` and then try again.
 
-> On Linux machines it is fairly easy to create a single exacutable file using the instructions described in [build_instructions.md](./buld_instructions.md)
+> **On Linux machines it is fairly easy to create a single exacutable file using the instructions described in** [build_instructions.md](./build_instructions.md)
 
 ## Printable Multiple Choice Sheet
 
