@@ -1,6 +1,6 @@
 # Kei OpenMCR
 
-### Free and Open-Source Multiple Choice Exam Reader and Scorer
+### Free and Open-Source Multiple Choice Exam Sheet Reader and Scorer
 
 This is a fork of OpenMCR, a program developed by Ian Sanders, available at:
 
