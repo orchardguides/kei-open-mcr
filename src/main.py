@@ -14,6 +14,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='OpenMCR: An accurate and simple exam bubble sheet reading tool.\n'
                                                  'Reads sheets from input folder, process and saves result in output folder.',
                                      formatter_class=argparse.RawTextHelpFormatter)
+    parser.add_argument('--test_identifier',
+                        help='Name of Test and Other Descriptive Information',
+                        type=parse_path_arg)
     parser.add_argument('--input_file',
                         help='Path to a folder containing scanned input sheets.\n'
                              'Sheets with student ID of "9999999999" treated as keys. Ignores subfolders.',
@@ -42,6 +45,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
+    test_identifier = args.test_identifier,
     multi_page_image_file = Path(args.input_file)
     output_folder = Path(args.output_folder)
     sort_results = args.sort
@@ -51,7 +55,8 @@ if __name__ == '__main__':
 
     images, images_name, images_type = image_utils.get_images([multi_page_image_file])
 
-process_input(images,
+process_input(test_identifier,
+              images,
               images_name,
               images_type,
               output_folder,

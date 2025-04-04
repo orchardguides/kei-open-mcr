@@ -1,5 +1,6 @@
 import abc
 import enum
+import string
 from pathlib import Path
 import subprocess
 import sys
@@ -22,7 +23,8 @@ PackTarget = tp.Union[tk.Tk, tk.Frame]
 def prompt_folder(message: str = "Select Folder", default: str = "./") -> Path:
     """Prompt the user to select a folder."""
     folderpath = filedialog.askdirectory(initialdir=default, title=message)
-    return Path(folderpath)
+    if type(folderpath) is str:
+        return Path(folderpath)
 
 
 def prompt_file(message: str = "Select File",
@@ -33,7 +35,8 @@ def prompt_file(message: str = "Select File",
     filepath = filedialog.askopenfilename(initialdir=default,
                                           title=message,
                                           filetypes=filetypes)
-    return Path(filepath)
+    if type(filepath) is str:
+        return Path(filepath)
 
 
 T = tp.TypeVar("T", bound=tk.Widget)
@@ -63,6 +66,34 @@ def create_and_pack_label(parent: PackTarget,
                 padx=XPADDING,
                 side=tk.LEFT if inline else None,
                 **pady_opt)
+
+class TestIdentifierWidget():
+    def __init__(self, 
+                 parent: PackTarget):
+
+        def __check_text_entry(event):
+            text = self.__test_identifier_text.get("1.0", "end-1c")
+            """Ignore returns and tabs."""
+            if event.keysym in ("Return", "Tab"):
+                return "break"
+            """Limit text length."""
+            if len(text) >= 50 and event.keysym not in ("BackSpace", "Delete"):
+                return "break"
+        
+        create_and_pack_label(parent, "Test Title", heading=True)
+        create_and_pack_label(
+            parent,
+            "Heading that will be printed at the top of the graded student handouts.")
+
+        self.__test_identifier_text = tk.Text(parent, height=1, width=50, padx=XPADDING)
+        self.__test_identifier_text.pack(padx=XPADDING)
+        self.__test_identifier_text.bind("<KeyPress>", __check_text_entry)
+
+    def get(self):
+        return self.__test_identifier_text.get("1.0", "end-1c")
+
+    def disable(self):
+        self.__test_identifier_text.configure(state=tk.DISABLED)
 
 
 class PickerWidget(abc.ABC):
@@ -197,12 +228,12 @@ class SelectWidget():
         self.__on_change = on_change
 
         container = tk.Frame(parent)
-        create_and_pack_label(container, label, inline=True)
+        create_and_pack_label(container, label, True, inline=True)
         self.__combobox = pack(ttk.Combobox(container,
                                             width=35,
                                             textvariable=self.__raw_value,
                                             values=options),
-                               side=tk.RIGHT)
+                                            side=tk.RIGHT)
         self.__combobox.current(0)
 
         self.__raw_value.trace("w", self.__on_update)
@@ -225,7 +256,6 @@ class FormVariantSelection(enum.Enum):
 
 class InputFilePickerWidget():
     file: tp.Optional[Path]
-    form_variant: FormVariantSelection
     all_files: bool
 
     def __init__(self,
@@ -235,37 +265,25 @@ class InputFilePickerWidget():
 
         container = tk.Frame(parent)
 
-        create_and_pack_label(container, "Select Multi-Page Image File", heading=True)
+        create_and_pack_label(container, "Multi-Page Image File", heading=True)
         create_and_pack_label(
             container,
-            "Select the pdf or tiff file that contains the multi-page image. Sheets\nwith a Student ID of '9999999999' will be treated as answer keys."
+            "Select the pdf or tiff file containing the multi-page image. Sheets with\na Student ID of '9999999999' will be treated as answer keys."
         )
         self.__image_file_picker = FilePickerWidget(
             container, [("Image File", ".tif"), ("Image File", ".tiff"), ("Image File", ".pdf")], self.__on_update)
-        self.__form_variant_picker = SelectWidget(
-            container, "Form Variant:", ["75 questions", "150 questions"],
-            self.__on_update)
 
         pack(container, fill=tk.X)
 
         self.file = None
-        self.form_variant = FormVariantSelection.VARIANT_75_Q
 
     def __on_update(self, *args: tp.Any):
         self.file = self.__image_file_picker.value
-        selected_form_variant = self.__form_variant_picker.value
-        if (selected_form_variant == "75 questions"):
-            self.form_variant = FormVariantSelection.VARIANT_75_Q
-        elif (selected_form_variant == "150 questions"):
-            self.form_variant = FormVariantSelection.VARIANT_150_Q
-
         if self.__on_change is not None:
             self.__on_change()
 
     def disable(self):
         self.__image_file_picker.disable()
-        self.__form_variant_picker.disable()
-
 
 class OutputFolderPickerWidget():
     folder: tp.Optional[Path]
@@ -351,14 +369,16 @@ class ProgressTrackerWidget:
 
 class MainWindow:
     root: tk.Tk
+    test_identifier: str
     multi_page_image_file: Path
     output_folder: Path
     sort_results: bool
     debug_mode: bool = False
-    form_variant: FormVariantSelection
+    form_variant: FormVariantSelection = FormVariantSelection.VARIANT_75_Q
     cancelled: bool = False
 
     def __init__(self):
+
         app: tk.Tk = tk.Tk()
         self.__app = app
         app.title(f"{APP_NAME} - Select Inputs")
@@ -371,6 +391,8 @@ class MainWindow:
             app.iconbitmap(iconpath)
 
         app.protocol("WM_DELETE_WINDOW", self.__on_close)
+
+        self.__test_identifier_widget = TestIdentifierWidget(app)       
 
         self.__multi_page_image_file_picker = InputFilePickerWidget(
             app, self.__on_update)
@@ -386,21 +408,23 @@ class MainWindow:
         buttons_frame = tk.Frame(app)
         
         # "Open Help" Button
-        if platform.system() not in ('Darwin','Linux'):
+        if platform.system() in ('Windows'):
             pack(ttk.Button(buttons_frame,
                             text="Help",
                             command=self.__show_help),
                             padx=XPADDING,
                             pady=YPADDING,
                             side=tk.LEFT)
+
         # "Open Sheet" button
-        if platform.system() not in ('Darwin','Linux'):
+        if platform.system() in ('Windows'):
             pack(ttk.Button(buttons_frame,
                             text="Print Form",
                             command=self.__show_sheet),
                             padx=XPADDING,
                             pady=YPADDING,
                             side=tk.LEFT)
+
         
         self.__confirm_button = pack(ttk.Button(buttons_frame,
                                                 text="✔ Continue",
@@ -418,6 +442,8 @@ class MainWindow:
         ok_to_submit = True
         new_status = ""
 
+        self.test_identifier = self.__test_identifier_widget.get()
+
         multi_page_image_file = self.__multi_page_image_file_picker.file
 
         if multi_page_image_file is None:
@@ -428,11 +454,7 @@ class MainWindow:
             new_status += f"✔ Image file selected.\n"
             ok_to_submit = True
 
-        self.form_variant = self.__multi_page_image_file_picker.form_variant
-        if self.form_variant == FormVariantSelection.VARIANT_75_Q:
-            new_status += "Using 75-question form variant.\n"
-        elif self.form_variant == FormVariantSelection.VARIANT_150_Q:
-            new_status += "Using 150-question form variant.\n"
+        new_status += "Using 75-question form variant.\n"
 
         output_folder = self.__output_folder_picker.folder
         if output_folder is None:
@@ -441,8 +463,6 @@ class MainWindow:
         else:
             self.output_folder = output_folder
             new_status += f"✔ Output folder selected.\n"
-
-        new_status += f"Unanswered questions will be left as blank cells.\n"
 
         self.sort_results = self.__output_folder_picker.sort_results
         if self.sort_results:
@@ -456,6 +476,7 @@ class MainWindow:
         return ok_to_submit
 
     def __disable_all(self):
+        self.__test_identifier_widget.disable()
         self.__confirm_button.configure(state=tk.DISABLED)
         self.__multi_page_image_file_picker.disable()
         self.__output_folder_picker.disable()
@@ -471,7 +492,7 @@ class MainWindow:
             """
             subprocess.Popen(['open',helpfile])
             """
-        else:
+        elif platform.system() in ('Windows'):
             subprocess.Popen([helpfile], shell=True)
 
     def __show_sheet(self):
@@ -483,17 +504,7 @@ class MainWindow:
                 """
                 subprocess.Popen(['open', helpfile])
                 """
-            else:
-                subprocess.Popen([helpfile], shell=True)
-        elif (self.form_variant == FormVariantSelection.VARIANT_150_Q):
-            helpfile = str(
-                Path(__file__).parent / "assets" /
-                "multiple_choice_sheet_150q.pdf")
-            if platform.system() in ('Darwin','Linux'):
-                """
-                subprocess.Popen(['open', helpfile])
-                """
-            else:
+            elif platform.system() in ('Windows'):
                 subprocess.Popen([helpfile], shell=True)
     
     def __on_close(self):

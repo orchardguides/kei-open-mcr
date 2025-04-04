@@ -4,13 +4,15 @@ Created on Feb 22, 2025
 @author: Kei G. Gauthier
 '''
 import csv
+import typing as tp
 from pathlib import Path
+from datetime import datetime
 from data_exporting import format_timestamp_for_file
 
 from reportlab.pdfgen.canvas import Canvas
 from reportlab.lib.pagesizes import letter
 
-def create_answer_key_pdfs(output_folder, files_timestamp):
+def create_answer_key_pdfs(output_folder: Path, files_timestamp: tp.Optional[datetime], test_identifier: str):
     path = str(output_folder) + "/" + f"{format_timestamp_for_file(files_timestamp)}"
 
     """Read open-mcr answer keys into python dictionaries"""   
@@ -62,13 +64,19 @@ def create_answer_key_pdfs(output_folder, files_timestamp):
         else:
             y_axis = y_axis-40
 
-        """Print test form code on canvas"""   
+        """Print test description and version on canvas"""   
         canvas.setFont('Helvetica-Bold', 16)
-        if key_dictionary["Test Form Code"] == "":
-            test_form_code = "Blank"
-        else:
-            test_form_code = key_dictionary["Test Form Code"]
-        canvas.drawString(60, y_axis, "Test Version: " + test_form_code)
+        test_description = test_identifier;
+
+        test_form_code = key_dictionary["Test Form Code"]
+        if test_form_code != "":
+            if test_description == "":
+                test_description = test_description + "Version " + test_form_code
+            else:
+                test_description = test_description + " Version " + test_form_code
+        if test_description != "":
+            canvas.drawString(60, y_axis, test_description)
+
         canvas.setFont('Helvetica-Bold', 14)
         y_axis = y_axis-24
 
@@ -95,7 +103,7 @@ def create_answer_key_pdfs(output_folder, files_timestamp):
     canvas.save()
 
 
-def create_scored_pdfs(output_folder, files_timestamp):
+def create_scored_pdfs(output_folder, files_timestamp, test_identifier):
     path = str(output_folder) + "/" + f"{format_timestamp_for_file(files_timestamp)}"
 
     """Read open-mcr output files into python dictionaries"""   
@@ -153,21 +161,27 @@ def create_scored_pdfs(output_folder, files_timestamp):
             print("❌ Unable to process result" + str(result_dictionary))        
             continue;
 
-        """Print name and score"""
+        """Print test description and version on canvas"""   
+        canvas.setFont('Helvetica-Bold', 16)
+        test_description = test_identifier;
+        test_form_code = key_dictionary["Test Form Code"]
+        if test_form_code != "":
+            if test_description == "":
+                test_description = test_description + "Version " + test_form_code
+            else:
+                test_description = test_description + " Version " + test_form_code
+        if test_description != "":
+            canvas.drawCentredString(612/2, 720, test_description)
+
+        """Print name"""
         canvas.setFont('Helvetica-Bold', 16)
         name = result_dictionary["Last Name"]
         if result_dictionary["First Name"] != "":
             name = name  + " , " + result_dictionary["First Name"]
         if result_dictionary["Middle Name"] != "":
             name = name  + " , " + result_dictionary["Middle Name"]
-        canvas.drawString(50, 720, name)
+        canvas.drawString(50, 680, name)
 
-        canvas.setFont('Helvetica-Bold', 16)
-        total_score = score_dictionary["Total Score (%)"]
-        if float(total_score) == 100.0:
-            canvas.drawRightString(550, 720, "Score " + total_score + "%")
-        else:
-            canvas.drawRightString(550, 720, "Score " + total_score + "%")
 
         """Count questions in answer key"""
         questions_in_key = 0
@@ -176,23 +190,22 @@ def create_scored_pdfs(output_folder, files_timestamp):
                 questions_in_key = questions_in_key + 1
             else:
                 break
-
+  
         """Print overall results"""
-        test_form_code = score_dictionary["Test Form Code"]
-        if test_form_code != "":
-            canvas.setFont('Helvetica-Bold', 14)
-            canvas.drawString(50, 680, "Test Version " + test_form_code)
-        canvas.drawRightString(550, 680, str(score_dictionary["Total Points"]) + 
+        canvas.setFont('Helvetica-Bold', 14)
+        canvas.drawString(50, 650, score_dictionary["Total Score (%)"] + "%  --  " + 
+                          str(score_dictionary["Total Points"]) + 
                           " of " + str(questions_in_key) + 
                           " questions answered correcty")
+
 
         """Print corrections"""
         if int(score_dictionary["Total Points"]) != questions_in_key:
             canvas.setFont('Helvetica-Bold', 14)
-            canvas.drawCentredString(612/2, 640, "Correct Answer:Chosen Answer")
+            canvas.drawCentredString(612/2, 595, "Correct Answer:Chosen Answer")
 
             x_axis = 50;
-            y_axis = 605
+            y_axis = 570
             for q in range(1,questions_in_key+1):
 
                 correct_answer = matching_key_dictionary["Q" + str(q)]
@@ -216,7 +229,7 @@ def create_scored_pdfs(output_folder, files_timestamp):
     """Save handouts in a multi-page pdf file"""
     canvas.save()
 
-def create_pdfs(output_folder, files_timestamp):
-    create_answer_key_pdfs(output_folder, files_timestamp)
-    create_scored_pdfs(output_folder, files_timestamp)
+def create_pdfs(output_folder, files_timestamp, test_identifier):
+    create_answer_key_pdfs(output_folder, files_timestamp, test_identifier)
+    create_scored_pdfs(output_folder, files_timestamp, test_identifier)
 

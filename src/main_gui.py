@@ -10,6 +10,7 @@ user_input = user_interface.MainWindow()
 if (user_input.cancelled):
     sys.exit(0)
 
+test_identifier = user_input.test_identifier
 multi_page_image_file = user_input.multi_page_image_file
 output_folder = user_input.output_folder
 sort_results = user_input.sort_results
@@ -20,7 +21,8 @@ files_timestamp = datetime.now().replace(microsecond=0)
 images, images_name, images_type = image_utils.get_images([multi_page_image_file])
 progress_tracker = user_input.create_and_pack_progress(maximum=len(images))
 
-process_input(images,
+process_input(test_identifier,
+              images,
               images_name,
               images_type,
               output_folder,

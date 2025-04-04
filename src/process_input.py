@@ -14,6 +14,7 @@ from user_interface import ProgressTrackerWidget
 from scored_handouts import create_pdfs
 
 def process_input(
+        test_identifier: str,
         images: tp.List[np.ndarray],
         images_name: tp.List[str],
         images_type: tp.List[str],
@@ -171,7 +172,7 @@ def process_input(
             print(f'Error: {wrapped_err}')
         if debug_mode_on:
             raise
-    create_pdfs(output_folder, files_timestamp)
+    create_pdfs(output_folder, files_timestamp, test_identifier)
 
     if progress_tracker:
         progress_tracker.show_exit_button_and_wait()
