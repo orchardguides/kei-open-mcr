@@ -4,7 +4,7 @@
 
 Here's all you have to do to grade bubble tests with up to [75 questions](https://github.com/orchardguides/kei-open-mcr/blob/main/src/assets/multiple_choice_sheet_75q.pdf). 
 
-1. Scan all sheets, including answer keys, into a single multi-page PDF or TIFF file. To create answer keys, simplyfill out a normal sheet and and enter `9999999999` in the **Student ID** field.
+1. Scan all sheets, including answer keys, into a single multi-page PDF or TIFF file. To create answer keys, simply fill out a normal sheet and and enter `9999999999` in the **Student ID** field.
 2. Run the program.
 3. Enter a description of the test in the program's **Test Title** field. This description will be printed at the top of the automatically generated PDF result student handouts.
 4. Under **Select Input File**, click <kbd>Browse</kbd> and select the multi-page PDF or TIFF file created in Step 1.
