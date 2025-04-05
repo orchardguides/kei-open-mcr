@@ -24,10 +24,10 @@ This is a fork of OpenMCR, a program developed by Ian Sanders, available at:
 
 The overall goal in creating this fork was to make the program easier to use.
 
- 1. The program now generates graded handouts for each test-taker. These handouts provide specific details about how each student's score was calculated.
- 2. As input, the program now processes a single multi-page pdf or tiff that should contain all of the multiple choice sheet images. Previously, the applcation only accepted single page image files as input.
+ 1. The program now generates graded handouts for each test-taker. These handouts provide specific details about how the student's score was calculated.
+ 2. As input, the program now processes a single multi-page PDF or TIFF that should contain all of the multiple choice sheet images. Previously, the applcation only accepted single page image files as input.
  3. Options to change the way that incorrect responses are reported have been eliminated.
- 4. Answer keys can now only be entered using the multiple choice sheets.
+ 4. Answer keys can now only be entered using multiple choice sheets with `9999999999` in the **Student ID** field.
  5. The graphical interface has been streamlined and now fits comfortably on low resolution screens.
  6. The program no longer works with 150 question sheets.
 
@@ -47,7 +47,7 @@ ZIP file packages are available for each release.
 
 To launch the program in Windows, download the ZIP file and extract its contents to a folder anywhere on your machine. Then run the `kei-open-mcr.exe` file found in the dist_windows folder. This method should not require administrator priveleges.
 
-### Running From Source / CLI
+### Running in a Command Line Terminal From Source
 
 If you wish to customize the software or launch the program in a non-Windows environment, you can use the command line interface and run the Python program directly from the source files. This requires Python and Pip to be installed on your machine.
 
@@ -55,7 +55,7 @@ If you wish to customize the software or launch the program in a non-Windows env
 2. Open a terminal / command prompt in the extracted directory.
 3. On Mac machines with fresh Python installations, you will have to update TKinter from the default.
 4. Run `pip3 install -r requirements.txt` to install dependencies.
-5. Run `python3 src/main.py` for the CLI interface or `python3 src/main_gui.py` for the graphical interface.
+5. Run `python3 src/main.py` in the terminal or `python3 src/main_gui.py` for the graphical interface.
 
 > **Note**: On MacOS, if you see a black screen when running the GUI, you need to uninstall Python, install TKinter, and then reinstall Python.
 
