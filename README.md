@@ -45,7 +45,7 @@ Currently, packaged executables are only provided for Windows. For other operati
 
 ZIP file packages are available for each release.
 
-To launch the program in Windows, download the ZIP file and extract its contents to a folder anywhere on your machine. Then run the `kei-open-mcr.exe` file found in the dist_windows folder. This method shoud not require administrator priveleges.
+To launch the program in Windows, download the ZIP file and extract its contents to a folder anywhere on your machine. Then run the `kei-open-mcr.exe` file found in the dist_windows folder. This method should not require administrator priveleges.
 
 ### Running From Source / CLI
 
