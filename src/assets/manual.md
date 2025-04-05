@@ -7,10 +7,10 @@ done as part of the build process (see /build_instructions.md) -->
 
 ## Basic Usage
 
-1. Scan all sheets, including answer keys, into a single multi-page PDF or TIFF file. This includes answer keys. To create answer keys, simply print a normal sheet and and enter `9999999999` in the **Student ID** field.
+1. Scan all sheets, including answer keys, into a single multi-page PDF or TIFF file. To create answer keys, simply print a normal sheet and and enter `9999999999` in the **Student ID** field.
 2. Run the program.
-3. Enter a description of the test in the program's **Test Title** field. This description will be printed at the top of the automatically generated PDF result handouts that may be distributed to students.
-4. Under **Select Input File**, click <kbd>Browse</kbd> and select the multi-page PDF or TIFF file you stored the images in.
+3. Enter a description of the test in the program's **Test Title** field. This description will be printed at the top of the automatically generated PDF result student handouts.
+4. Under **Select Input File**, click <kbd>Browse</kbd> and select the multi-page PDF or TIFF file created in Step 1.
 5. Under **Select Output Folder**, click <kbd>Browse</kbd> and select the folder where you would like to save the results.
 6. If you select the **Sort results by students' name**, results will be sorted by the students' last, first, and middle names (in that order). Otherwise, results will be saved in the order processed.
 7. Click <kbd>Continue</kbd>.
