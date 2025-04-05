@@ -7,6 +7,14 @@ done as part of the build process (see /build_instructions.md) -->
 
 ## Basic Usage
 
+1. Scan all sheets, including answer keys, into a single multi-page PDF or TIFF file. This includes answer keys. To create answer keys, simply print a normal sheet and and enter `9999999999` in the **Student ID** field.
+2. Run the program.
+3. Enter a description of the test in the program's **Test Title** field. This description will be printed at the top of the automatically generated PDF result handouts that may be distributed to students.
+4. Under **Select Input File**, click <kbd>Browse</kbd> and select the multi-page PDF or TIFF file you stored the images in.
+5. Under **Select Output Folder**, click <kbd>Browse</kbd> and select the folder where you would like to save the results.
+6. If you select the **Sort results by students' name**, results will be sorted by the students' last, first, and middle names (in that order). Otherwise, results will be saved in the order processed.
+7. Click <kbd>Continue</kbd>.
+
 ### Installation
 
 For download and installation instructions, see the project homepage:
@@ -34,20 +42,6 @@ field. Also, add a **Test Form Code** which will be used to match students' exam
 with the correct answer key, and finally fill in the exam with the correct
 answers.
 
-### Reading Sheets
-
-Simply follow the following steps to process any number of filled exam sheets:
-
-1. Scan all sheets using a standard scanner into a single multi-page pdf or tiff file. This includes answer keys - there is no need to scan them seperately.
-3. Run the software. If you used the installer, a shortcut will be located in your Start menu. The sofware may take a moment to start.
-4. Under **Select Input File**, click <kbd>Browse</kbd> and select the multi-page pdf or tiff file you stored the images in.
-5. Under **Select Output Folder**, click <kbd>Browse</kbd> and select the folder where
-   you would like to save the resulting CSV files.
-   - If you select the _sort results by name_ option, results will be sorted
-     by the students' last, first, and middle names (in that order). Otherwise,
-     results will be saved in the order processed.
-6. Click <kbd>Continue</kbd>.
-
 ### Scoring Results
 
 In addition to reading scanned images, the software can automatically scores
@@ -63,10 +57,9 @@ single answer key sheet provided.
 
 #### Distinct Exam Variants
 
-Finally, you can provide the exam-takers with multiple wholly distinct variants
+You can provide the exam-takers with multiple wholly distinct variants
 of the same exam. In this case, each exam will be scored by selecting the answer
-key with an exactly matching **Test Form Code**. No rearrangement will be
-performed.
+key with a matching **Test Form Code**.
 
 ### Output Files
 
@@ -86,9 +79,9 @@ file, questions are saved for each student as either `1` (correct) or `0`
 
 ### PDF Handouts
 
-After creating the csv output files, the program automatically generates pdf result
+After creating the CSV output files, the program automatically generates PDF result
 sheets that can be distributed to students. These handouts report overall score and
 list out incorrect responses with a corresponding correction.
 
-A pdf file listing the correct response for every question in each of the Answer
+A PDF file listing the correct response for every question in each of the Answer
 Keys is also generated.
