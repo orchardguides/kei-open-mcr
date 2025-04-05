@@ -2,7 +2,7 @@
 
 ## Basic Usage
 
-Here's all you have to do to score [75 question](https://github.com/orchardguides/kei-open-mcr/blob/main/src/assets/multiple_choice_sheet_75q.pdf) bubble tests. 
+Here's all you have to do to grade [75 question](https://github.com/orchardguides/kei-open-mcr/blob/main/src/assets/multiple_choice_sheet_75q.pdf) bubble tests. 
 
 1. Scan all sheets, including answer keys, into a single multi-page PDF or TIFF file. To create answer keys, simplyfill out a normal sheet and and enter `9999999999` in the **Student ID** field.
 2. Run the program.
