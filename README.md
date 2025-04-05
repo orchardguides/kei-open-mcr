@@ -22,7 +22,7 @@ This is a fork of OpenMCR, a program developed by Ian Sanders, available at:
 
 ## Major changes to the original code include:
 
-The overall goal in creating this fork was to make the program easier for the average educator to use.
+The overall goal in creating this fork was to make the program easier to use.
 
  1. The program now generates individual handouts for each test-taker. These handouts provide specific details about how each student's grade was calculated.
  2. As input, the program now processes a single multi-page pdf or tiff that should contain all of the multiple choice sheet images. Previously, the applcation only accepted single page image files as input.
