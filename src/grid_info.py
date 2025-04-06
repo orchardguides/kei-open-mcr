@@ -103,27 +103,6 @@ form_75q = FormVariant(
         for i in range(75)
     ])
 
-form_150q = FormVariant(
-    {
-        Field.STUDENT_ID:
-        GridGroupInfo(25, 3, 10),
-        Field.COURSE_ID:
-        GridGroupInfo(14, 3, 10),
-        Field.TEST_FORM_CODE:
-        GridGroupInfo(4,
-                      12,
-                      fields_type=FieldType.LETTER,
-                      field_length=6,
-                      field_orientation=Orientation.HORIZONTAL)
-    }, [
-        GridGroupInfo(2 + (7 * (i // 30)),
-                      17 + i - (30 * (i // 30)),
-                      fields_type=FieldType.LETTER,
-                      field_length=5,
-                      field_orientation=Orientation.HORIZONTAL)
-        for i in range(150)
-    ])
-
 
 class dimensions:
     vertical_cells = 36

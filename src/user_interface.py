@@ -251,7 +251,6 @@ class SelectWidget():
 
 class FormVariantSelection(enum.Enum):
     VARIANT_75_Q = enum.auto()
-    VARIANT_150_Q = enum.auto()
 
 
 class InputFilePickerWidget():
@@ -454,7 +453,7 @@ class MainWindow:
             new_status += f"✔ Image file selected.\n"
             ok_to_submit = True
 
-        new_status += "Using 75-question form variant.\n"
+        new_status += "Using 75-question form.\n"
 
         output_folder = self.__output_folder_picker.folder
         if output_folder is None:

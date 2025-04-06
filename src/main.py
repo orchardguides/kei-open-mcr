@@ -24,10 +24,6 @@ if __name__ == '__main__':
     parser.add_argument('--output_folder',
                         help='Path to a folder to save result to.',
                         type=parse_path_arg)
-    parser.add_argument('--variant',
-                        default='75',
-                        choices=['75', '150'],
-                        help='Form variant either 75 questions (default) or 150 questions.')
     parser.add_argument('-s', '--sort',
                         action='store_true',
                         help="Sort output by students' name.")
@@ -50,7 +46,7 @@ if __name__ == '__main__':
     output_folder = Path(args.output_folder)
     sort_results = args.sort
     debug_mode_on = args.debug
-    form_variant = grid_i.form_150q if args.variant == '150' else grid_i.form_75q
+    form_variant = grid_i.form_75q
     files_timestamp = datetime.now().replace(microsecond=0) if not args.disable_timestamps else None
 
     images, images_name, images_type = image_utils.get_images([multi_page_image_file])

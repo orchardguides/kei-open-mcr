@@ -15,7 +15,7 @@ multi_page_image_file = user_input.multi_page_image_file
 output_folder = user_input.output_folder
 sort_results = user_input.sort_results
 debug_mode_on = user_input.debug_mode
-form_variant = grid_i.form_150q if user_input.form_variant == user_interface.FormVariantSelection.VARIANT_150_Q else grid_i.form_75q
+form_variant = grid_i.form_75q
 files_timestamp = datetime.now().replace(microsecond=0)
 
 images, images_name, images_type = image_utils.get_images([multi_page_image_file])

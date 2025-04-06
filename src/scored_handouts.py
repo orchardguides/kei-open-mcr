@@ -34,7 +34,7 @@ def create_answer_key_pdfs(output_folder: Path, files_timestamp: tp.Optional[dat
 
         """Count questions in answer key"""
         questions_in_key = 0
-        for q in range(1,150+1):
+        for q in range(1,75+1):
             if key_dictionary["Q" + str(q)] != "":
                 questions_in_key = questions_in_key + 1
             else:
@@ -83,7 +83,7 @@ def create_answer_key_pdfs(output_folder: Path, files_timestamp: tp.Optional[dat
         """List the correct answers"""   
         canvas.drawCentredString(612/2, y_axis, "Question:  Correct Answer")
         y_axis = y_axis-24
-        for q in range(1,150+1):
+        for q in range(1,75+1):
             if key_dictionary["Q" + str(q)] != "":
                 canvas.setFont('Helvetica-Bold', 12)
                 canvas.drawString(x_axis, y_axis, "Q" + str(q))
@@ -185,7 +185,7 @@ def create_scored_pdfs(output_folder, files_timestamp, test_identifier):
 
         """Count questions in answer key"""
         questions_in_key = 0
-        for q in range(1,150+1):
+        for q in range(1,75+1):
             if matching_key_dictionary["Q" + str(q)] != "":
                 questions_in_key = questions_in_key + 1
             else:
