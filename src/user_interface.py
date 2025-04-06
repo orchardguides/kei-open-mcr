@@ -1,5 +1,4 @@
 import abc
-import enum
 import string
 from pathlib import Path
 import subprocess
@@ -249,10 +248,6 @@ class SelectWidget():
         self.__combobox.configure(state=tk.DISABLED)
 
 
-class FormVariantSelection(enum.Enum):
-    VARIANT_75_Q = enum.auto()
-
-
 class InputFilePickerWidget():
     file: tp.Optional[Path]
     all_files: bool
@@ -373,7 +368,6 @@ class MainWindow:
     output_folder: Path
     sort_results: bool
     debug_mode: bool = False
-    form_variant: FormVariantSelection = FormVariantSelection.VARIANT_75_Q
     cancelled: bool = False
 
     def __init__(self):
@@ -495,16 +489,15 @@ class MainWindow:
             subprocess.Popen([helpfile], shell=True)
 
     def __show_sheet(self):
-        if (self.form_variant == FormVariantSelection.VARIANT_75_Q):
-            helpfile = str(
-                Path(__file__).parent / "assets" /
-                "multiple_choice_sheet_75q.pdf")
-            if platform.system() in ('Darwin','Linux'):
-                """
-                subprocess.Popen(['open', helpfile])
-                """
-            elif platform.system() in ('Windows'):
-                subprocess.Popen([helpfile], shell=True)
+        helpfile = str(
+            Path(__file__).parent / "assets" /
+            "multiple_choice_sheet_75q.pdf")
+        if platform.system() in ('Darwin','Linux'):
+            """
+            subprocess.Popen(['open', helpfile])
+            """
+        elif platform.system() in ('Windows'):
+            subprocess.Popen([helpfile], shell=True)
     
     def __on_close(self):
         self.__app.destroy()
