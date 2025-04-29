@@ -59,7 +59,7 @@ def create_answer_key_pdfs(output_folder: Path, files_timestamp: tp.Optional[dat
         if key_dictionary == key_dictionaries[0]:
             y_axis = 720
         elif y_axis - answer_key_height < 0:
-            canvas.save()
+            canvas.showPage()
             y_axis = 720
         else:
             y_axis = y_axis-40
