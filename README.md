@@ -25,7 +25,7 @@ This is a fork of OpenMCR, a program developed by Ian Sanders, available at:
 The overall goal in creating this fork was to make the program easier to use.
 
  1. The program now generates graded handouts for each test-taker. These handouts provide specific details about how the student's score was calculated.
- 2. As input, the program now processes a single multi-page PDF or TIFF that should contain all of the multiple choice sheet images. Previously, the applcation only accepted single page image files as input.
+ 2. As input, the program now processes a single multi-page PDF or TIFF that should contain all of the multiple choice sheet images. Previously, the applcation only accepted single page image files as input. [Answer Key Example](https://github.com/orchardguides/kei-open-mcr/blob/main/2025-05-06_12-18-41__Keys.pdf)  --  [Student Handout Example](https://github.com/orchardguides/kei-open-mcr/blob/main/2025-05-06_12-18-41__Scores.pdf)
  3. Options to change the way that incorrect responses are reported have been eliminated.
  4. Answer keys can now only be entered using multiple choice sheets with `9999999999` in the **Student ID** field.
  5. The graphical interface has been streamlined and now fits comfortably on low resolution screens.
