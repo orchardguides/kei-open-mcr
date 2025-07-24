@@ -8,11 +8,17 @@ import typing as tp
 from pathlib import Path
 from datetime import datetime
 from data_exporting import format_timestamp_for_file
+import numpy as np
 
+import cv2
 from reportlab.pdfgen.canvas import Canvas
 from reportlab.lib.pagesizes import letter
+    
+def create_answer_key_pdfs(
+        output_folder: Path,
+        files_timestamp: tp.Optional[datetime],
+        test_identifier: str):
 
-def create_answer_key_pdfs(output_folder: Path, files_timestamp: tp.Optional[datetime], test_identifier: str):
     path = str(output_folder) + "/" + f"{format_timestamp_for_file(files_timestamp)}"
 
     """Read open-mcr answer keys into python dictionaries"""   
@@ -25,7 +31,7 @@ def create_answer_key_pdfs(output_folder: Path, files_timestamp: tp.Optional[dat
                 key_dictionaries.append(row)
     if len(key_dictionaries) == 0:
         print("❌ No answer keys found")
-        return
+        return False
 
     """Initialize pdf canvas"""   
     canvas = Canvas(path + "Keys.pdf", pagesize=letter)
@@ -64,7 +70,7 @@ def create_answer_key_pdfs(output_folder: Path, files_timestamp: tp.Optional[dat
         else:
             y_axis = y_axis-40
 
-        """Print test description and version on canvas"""   
+        """Print test description and version on canvas"""
         canvas.setFont('Helvetica-Bold', 16)
         test_description = test_identifier;
 
@@ -101,9 +107,16 @@ def create_answer_key_pdfs(output_folder: Path, files_timestamp: tp.Optional[dat
 
     """Save answer keys in a multi-page pdf file"""
     canvas.save()
+    return True
 
 
-def create_scored_pdfs(output_folder, files_timestamp, test_identifier):
+def create_scored_pdfs(
+        output_folder: Path,
+        files_timestamp: tp.Optional[datetime],
+        test_identifier: str,
+        images: tp.List[np.ndarray],
+        unusable_sheets: tp.List[np.ndarray]):
+
     path = str(output_folder) + "/" + f"{format_timestamp_for_file(files_timestamp)}"
 
     """Read open-mcr output files into python dictionaries"""   
@@ -141,7 +154,7 @@ def create_scored_pdfs(output_folder, files_timestamp, test_identifier):
         print("❌ No scores found")
         return
 
-    """Initialize pdf canvas"""   
+    """Initialize pdf canvas"""
     canvas = Canvas(path + "Scores.pdf", pagesize=letter)
 
     """Loop through test results"""
@@ -158,7 +171,8 @@ def create_scored_pdfs(output_folder, files_timestamp, test_identifier):
 
         """Ignore results that lack a valid Test Form Code"""
         if matching_key_dictionary == None:
-            print("❌ Unable to process result" + str(result_dictionary))        
+            rejected_sheet_index = result_dictionary["Source File"][result_dictionary["Source File"].find("_") + 1]
+            unusable_sheets.append(images[int(rejected_sheet_index)-1])
             continue;
 
         """Print test description and version on canvas"""   
@@ -229,7 +243,12 @@ def create_scored_pdfs(output_folder, files_timestamp, test_identifier):
     """Save handouts in a multi-page pdf file"""
     canvas.save()
 
-def create_pdfs(output_folder, files_timestamp, test_identifier):
-    create_answer_key_pdfs(output_folder, files_timestamp, test_identifier)
-    create_scored_pdfs(output_folder, files_timestamp, test_identifier)
+def create_pdfs(
+        output_folder: Path,
+        files_timestamp: tp.Optional[datetime],
+        test_identifier: str,
+        images: tp.List[np.ndarray],
+        unusable_sheets: tp.List[np.ndarray]):
+    if create_answer_key_pdfs(output_folder, files_timestamp, test_identifier):
+        create_scored_pdfs(output_folder, files_timestamp, test_identifier, images, unusable_sheets)
 

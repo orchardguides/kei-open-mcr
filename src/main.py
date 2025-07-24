@@ -49,12 +49,11 @@ if __name__ == '__main__':
     form_variant = grid_i.form_75q
     files_timestamp = datetime.now().replace(microsecond=0) if not args.disable_timestamps else None
 
-    images, images_name, images_type = image_utils.get_images([multi_page_image_file])
+    images, images_name = image_utils.get_images([multi_page_image_file])
 
 process_input(test_identifier,
               images,
               images_name,
-              images_type,
               output_folder,
               sort_results,
               debug_mode_on,

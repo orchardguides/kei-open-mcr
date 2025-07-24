@@ -12,6 +12,9 @@ import file_handling
 import scoring
 import str_utils
 
+from data_exporting import format_timestamp_for_file
+import imageio
+
 YPADDING = 4
 XPADDING = 7
 APP_NAME = "Kei Open-MCR"
@@ -332,12 +335,17 @@ class ProgressTrackerWidget:
             "pady": YPADDING
         }
         self.status_text = tk.StringVar(parent)
-        pack(ttk.Label(parent, textvariable=self.status_text, width=45),
+        self.status_label = ttk.Label(parent, textvariable=self.status_text, width=45)
+
+        pack(self.status_label,
              **pack_opts)
         self.progress_bar = pack(
             ttk.Progressbar(parent, maximum=maximum, mode="determinate"),
             **pack_opts)
         self.close_when_changes = tk.IntVar(parent, name="Ready to Close")
+
+    def set_status_label_alert(self):
+        self.status_label.config(foreground = "#8B0000")
 
     def step_progress(self, step: int = 1):
         self.value += step

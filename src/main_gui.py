@@ -18,13 +18,12 @@ debug_mode_on = user_input.debug_mode
 form_variant = grid_i.form_75q
 files_timestamp = datetime.now().replace(microsecond=0)
 
-images, images_name, images_type = image_utils.get_images([multi_page_image_file])
+images, images_name = image_utils.get_images([multi_page_image_file])
 progress_tracker = user_input.create_and_pack_progress(maximum=len(images))
 
 process_input(test_identifier,
               images,
               images_name,
-              images_type,
               output_folder,
               sort_results,
               debug_mode_on,

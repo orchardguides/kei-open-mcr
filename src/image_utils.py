@@ -81,7 +81,6 @@ def get_images(image_paths: tp.List[pathlib.PurePath],
     """
     images = []
     images_name = []
-    images_type = []
     for image_path in image_paths:
         pages = []
         if image_path.suffix.lower() == ".pdf":
@@ -94,10 +93,9 @@ def get_images(image_paths: tp.List[pathlib.PurePath],
             for i in range(len(pages)):
                 images.append(pages[i])
                 images_name.append(str(image_path.stem) + "_" + str(i+1))
-                images_type.append(str(image_path.suffix)[1:])
                 if save_path:
                     save_image(save_path / "original.jpg", result)
-    return (images, images_name, images_type)
+    return (images, images_name)
 
 
 def save_image(path: pathlib.PurePath, image: np.ndarray):

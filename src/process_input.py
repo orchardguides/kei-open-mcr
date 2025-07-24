@@ -13,11 +13,13 @@ import grid_reading as grid_r
 from user_interface import ProgressTrackerWidget
 from scored_handouts import create_pdfs
 
+import imageio
+from data_exporting import format_timestamp_for_file
+
 def process_input(
         test_identifier: str,
         images: tp.List[np.ndarray],
         images_name: tp.List[str],
-        images_type: tp.List[str],
         output_folder: Path,
         sort_results: bool,
         debug_mode_on: bool,
@@ -35,8 +37,9 @@ def process_input(
                                                  form_variant.num_questions)
     keys_results = data_exporting.OutputSheet([grid_i.Field.TEST_FORM_CODE, grid_i.Field.IMAGE_FILE],
                                               form_variant.num_questions)
-
-    rejected_files = data_exporting.OutputSheet([grid_i.Field.IMAGE_FILE], 0)
+    unusable_sheets = []
+    
+    status_string = ""
 
     debug_dir = output_folder / (
             data_exporting.format_timestamp_for_file(files_timestamp) + "debug")
@@ -52,9 +55,9 @@ def process_input(
                 debug_path = None
 
             if progress_tracker:
-                progress_tracker.set_status(f"Processing {images_name[i]}.{images_type[i]}")
+                progress_tracker.set_status(f"Processing {images_name[i]}")
             else:
-                print(f"Processing {images_name[i]}.{images_type[i]}")
+                print(f"Processing {images_name[i]}")
 
             image = images[i]
             prepared_image = image_utils.prepare_scan_for_processing(
@@ -64,7 +67,9 @@ def process_input(
                 corners = corner_finding.find_corner_marks(prepared_image,
                                                        save_path=debug_path)
             except corner_finding.CornerFindingError:
-                rejected_files.add({grid_i.Field.IMAGE_FILE: images_name[i]}, [])
+                unusable_sheets.append(images[i])
+                if progress_tracker:
+                    progress_tracker.step_progress()
                 continue
 
             # Dilates the image - removes black pixels from edges, which preserves
@@ -138,42 +143,47 @@ def process_input(
                              sort_results,
                              timestamp=files_timestamp)
 
-        if rejected_files.row_count == 0:
-            success_string = "✔️ All exams processed and saved.\n"
-        else:
-            success_string = "❗ Some files could not be processed (see rejected_files output).\nAll other exams were processed and saved.\n"
-            rejected_files.save(output_folder, "rejected_files", sort=False, timestamp=files_timestamp)
-
         if (keys_results.row_count == 0):
-            success_string += "No exam keys were found, so no scoring was performed."
+            status_string += "❌ No answer keys were found, so no scoring was performed."
+            if progress_tracker:
+                progress_tracker.set_status_label_alert()
         else:
             keys_results.save(output_folder,
                               "keys",
                               sort_results,
                               timestamp=files_timestamp)
-            success_string += "✔️ All keys processed and saved.\n"
             scores = scoring.score_results(answers_results, keys_results,
                                            form_variant.num_questions)
             scores.save(output_folder,
                         "scores",
                         sort_results,
                         timestamp=files_timestamp)
-            success_string += "✔️ All scored results processed and saved."
 
-        if progress_tracker:
-            progress_tracker.set_status(success_string, False)
-        else:
-            print(success_string)
+            create_pdfs(output_folder, files_timestamp, test_identifier, images, unusable_sheets)
+
+            if unusable_sheets == []:
+                status_string = "✔️ All exams processed and saved in the Output Folder.\n"
+            else:
+                path = str(output_folder) + "/" + f"{format_timestamp_for_file(files_timestamp)}"
+                imageio.mimsave(path + "Unsueable_Sheets.tif", unusable_sheets)
+
+                status_string = "❌ Partial Success --- Scores from readable Answer Sheets are reported\n"
+                status_string += "in the Output Folder along with images of illegible sheets, which are\n"
+                status_string += "collected in Unusable_Sheets.tif."
+                if progress_tracker:
+                    progress_tracker.set_status_label_alert()
+
     except (RuntimeError, ValueError) as e:
         wrapped_err = "\n".join(textwrap.wrap(str(e), 70))
-        if progress_tracker:
+        if progress_tracker: 
             progress_tracker.set_status(f"Error: {wrapped_err}", False)
         else:
             print(f'Error: {wrapped_err}')
         if debug_mode_on:
             raise
-    create_pdfs(output_folder, files_timestamp, test_identifier)
 
     if progress_tracker:
+        progress_tracker.set_status(status_string, False)
         progress_tracker.show_exit_button_and_wait()
-
+    else:
+      print(status_string)
