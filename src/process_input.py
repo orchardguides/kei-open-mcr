@@ -165,7 +165,7 @@ def process_input(
                 status_string = "✔️ All exams processed and saved in the Output Folder.\n"
             else:
                 path = str(output_folder) + "/" + f"{format_timestamp_for_file(files_timestamp)}"
-                imageio.mimsave(path + "Unsueable_Sheets.tif", unusable_sheets)
+                imageio.mimsave(path + "Unsusable_Sheets.tif", unusable_sheets)
 
                 status_string = "❌ Partial Success --- Scores from readable Answer Sheets are reported\n"
                 status_string += "in the Output Folder along with images of illegible sheets, which are\n"
